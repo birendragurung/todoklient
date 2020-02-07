@@ -18,4 +18,9 @@ class UsersRepository extends BaseRepository implements UsersInterface
     {
         return $this->model->all();
     }
+
+    public function findByEmail(string $email)
+    {
+        return $this->model->where('email' , $email)->first();
+    }
 }

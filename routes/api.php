@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('authenticate' , ['uses' => 'Auth\ApiLoginController@authenticate']);
+
 Route::get('/users', ['uses' => 'UserController@index', 'middleware' => 'auth:api' ]);
 

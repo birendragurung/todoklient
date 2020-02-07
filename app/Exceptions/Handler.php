@@ -67,7 +67,7 @@ class Handler extends ExceptionHandler
             } elseif ($exception instanceof ValidationException) {
                 return $this->responseValidationError($exception->errors());
             } elseif ($exception instanceof HttpException) {
-                return $this->apiResponse(null, $exception->getStatusCode(), $exception->getMessage(), AppConstants::getAppMsgCodeFromStatusCode($exception->getStatusCode()));
+                return $this->apiResponse(null, $exception->getStatusCode(), $exception->getMessage(), $exception->getStatusCode());
             } elseif ($exception instanceof ModelNotFoundException) {
                 return $this->responseNotFound();
             } elseif ($exception instanceof QueryException) {
