@@ -50,6 +50,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if (is_api_request($request)){
+            dd($exception);
+        }
         return parent::render($request, $exception);
     }
 }
