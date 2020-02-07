@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use App\DBTables;
+use App\Constants\DBTables;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
