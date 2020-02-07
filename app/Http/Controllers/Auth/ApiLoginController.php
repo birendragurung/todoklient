@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Constants\AppConstants;
 use App\Entities\User;
-use App\Http\Requests\Auth\AuthenticationRequest;
-use App\Interfaces\UsersInterface;
 use App\Traits\ApiResponser;
 use Defuse\Crypto\Crypto;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
