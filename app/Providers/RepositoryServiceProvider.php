@@ -1,11 +1,7 @@
 <?php
 
-
 namespace App\Providers;
 
-
-use App\Interfaces\TasksInterface;
-use App\Repositories\TasksRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -18,7 +14,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(TasksInterface::class, TasksRepository::class);
-        $this->app->bind(TasksInterface::class, TasksRepository::class);
+        $this->app->bind('App\Interfaces\UsersInterface', 'App\Repositories\UsersRepository');
+        $this->app->bind('App\Interfaces\TasksInterface', 'App\Repositories\TasksRepository');
     }
 }

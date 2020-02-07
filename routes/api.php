@@ -14,7 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/users', ['uses' => 'UserController@index', 'middleware' => 'auth:api' ]);
 
