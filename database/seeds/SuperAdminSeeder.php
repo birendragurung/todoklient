@@ -1,11 +1,13 @@
 <?php
 
+use App\Constants\AppConstants;
 use App\Entities\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
 class SuperAdminSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -15,12 +17,10 @@ class SuperAdminSeeder extends Seeder
     {
         Model::unguard();
 
-        $user = User::create(
-            [
-                'name' => 'super admin' ,
-                'email' => 'birendragurung007@gmail.com' ,
+        $user = User::updateOrCreate(['email' => 'birendragurung007@gmail.com'],[
+                'name'     => 'super admin' ,
                 'password' => bcrypt('password') ,
-            ]
-        );
+                'role'     => AppConstants::ROLE_ADMIN,
+            ]);
     }
 }

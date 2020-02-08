@@ -5,6 +5,8 @@ namespace App\Traits;
 
 
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 trait ApiResponser
 {
@@ -98,7 +100,7 @@ trait ApiResponser
     protected function parseBodyForList($body)
     {
 
-        if ($body instanceof Collection || (is_array($body) && !array_is_assoc($body))){
+        if ($body instanceof Collection || (is_array($body) && !Arr::isAssoc($body))){
             return ['data' => $body];
         }
         return $body;

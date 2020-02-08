@@ -23,4 +23,9 @@ class UsersRepository extends BaseRepository implements UsersInterface
     {
         return $this->model->where('email' , $email)->first();
     }
+
+    public function create(array $attributes)
+    {
+        return $this->model->create($attributes);
+    }
 }

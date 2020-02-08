@@ -29,6 +29,9 @@ class AppConstants
 
     const ERR_PASSWORDS_TOKEN = "passwords_token";
 
+    const ROLE_STAFF = 'staff';
+
+    const ROLE_ADMIN = 'admin';
 
     /**
      * Used typically whenever user try to submitForm with invalid username/password combination
@@ -89,5 +92,9 @@ class AppConstants
         self::TASK_STATE_COMPLETED ,
         self::TASK_STATE_NEW ,
         self::TASK_STATE_IN_PROGRESS ,
+    ];
+
+    const ROLES = [
+        self::ROLE_STAFF, self::ROLE_ADMIN
     ];
 }

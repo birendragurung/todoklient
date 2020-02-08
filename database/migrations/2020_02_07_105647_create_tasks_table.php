@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->enum('state' , [
                 AppConstants::TASK_STATES ,
             ]);
-            $table->bigInteger('assignee');
+            $table->bigInteger('assignee')->nullable();
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by');
             $table->softDeletes();

@@ -11,10 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+//Route::get('/', 'Auth\LoginController@login')->middleware('guest')->name('login')  ;
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('web-app');
+
+Route::get('/invitations/confirm' , 'AcceptInvitationController@showAcceptForm')->name('invitations.show') ;
+Route::post('/invitations/confirm' , 'AcceptInvitationController@accept')->name('invitations.confirm') ;
