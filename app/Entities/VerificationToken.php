@@ -2,10 +2,10 @@
 
 namespace App\Entities;
 
-use App\Constants\DBTables;
+use App\Constants\DBConstants;
 use Illuminate\Database\Eloquent\Model;
 
 class VerificationToken extends Model
 {
-    protected $table = DBTables::VERIFICATION_TOKEN;
+    protected $table = DBConstants::VERIFICATION_TOKEN;
 }

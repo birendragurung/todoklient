@@ -16,23 +16,33 @@ abstract class BaseRepository implements RepositoryInterface
         $this->model = $model;
     }
 
-    public function create(array $attributes)
+    public function list(array $params = [])
     {
-        // TODO: Implement create() method.
+        return $this->model->get();
     }
 
-    public function delete(int $id)
+    public function create(array $attributes)
     {
-        // TODO: Implement delete() method.
+        return $this->model->create($attributes);
+    }
+
+    public function deleteById(int $id)
+    {
+        return $this->model->where('id' , $id)->delete();
     }
 
     public function findById(int $id)
     {
-        // TODO: Implement findById() method.
+        return $this->model->find($id);
     }
 
-    public function update(int $id , array $attributes)
+    public function updateById(int $id , array $attributes)
     {
-        // TODO: Implement update() method.
+        return $this->model->where('id' , $id)->update($attributes);
+    }
+
+    public function updateBy(array $conditions, array $attributes)
+    {
+        return $this->model->where($conditions)->update($attributes);
     }
 }

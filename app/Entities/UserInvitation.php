@@ -2,12 +2,12 @@
 
 namespace App\Entities;
 
-use App\Constants\DBTables;
+use App\Constants\DBConstants;
 use Illuminate\Database\Eloquent\Model;
 
 class UserInvitation extends Model
 {
-    protected $table = DBTables::USER_INVITATIONS;
+    protected $table = DBConstants::USER_INVITATIONS;
 
     protected $fillable = ['role' , 'email' ,'token' , 'expiry_date'];
 }

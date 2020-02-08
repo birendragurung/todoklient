@@ -4,8 +4,9 @@
 namespace App\Constants;
 
 
-class DBTables
+class DBConstants
 {
+
 
     const TASKS = 'tasks';
 

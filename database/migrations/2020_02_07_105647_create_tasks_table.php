@@ -17,6 +17,7 @@ class CreateTasksTable extends Migration
         Schema::connection('todo_db')->create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title', 191);
+            $table->text('description');
             $table->enum('state' , [
                 AppConstants::TASK_STATES ,
             ]);
