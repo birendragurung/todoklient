@@ -52,8 +52,14 @@ class TasksController extends Controller
     {
         return $this->responseOk($this->tasks->updateById($id, $request->all()));
     }
+
     public function updateAssignee(UpdateTaskAssigneeRequest $request, int $id)
     {
         return $this->responseOk($this->tasks->updateById($id, $request->all()));
+    }
+
+    public function delete(int $id)
+    {
+        return $this->responseOk($this->tasks->deleteById($id));
     }
 }

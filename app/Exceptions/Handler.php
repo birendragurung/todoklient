@@ -11,6 +11,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -59,6 +60,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+
         if (is_api_request($request)){
             if ($exception instanceof AuthenticationException) {
                 return $this->responseUnAuthorize($exception->getMessage());
@@ -69,6 +71,8 @@ class Handler extends ExceptionHandler
             } elseif ($exception instanceof HttpException) {
                 return $this->apiResponse(null, $exception->getStatusCode(), $exception->getMessage(), $exception->getStatusCode());
             } elseif ($exception instanceof ModelNotFoundException) {
+                return $this->responseNotFound();
+            } elseif ($exception instanceof NotFoundHttpException) {
                 return $this->responseNotFound();
             } elseif ($exception instanceof QueryException) {
                 $codeText = '';

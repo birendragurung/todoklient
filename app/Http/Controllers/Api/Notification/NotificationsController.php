@@ -27,10 +27,10 @@ class NotificationsController extends Controller
 
     public function index()
     {
-        return $this->responseOk($this->notifications->list());
+        return $this->responseOk($this->notifications->listForUser(auth()->id()));
     }
 
-    public function show(int $id)
+    public function show(Request $request, int $id)
     {
         return $this->responseOk($this->notifications->findById($id));
     }

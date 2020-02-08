@@ -32,4 +32,16 @@ class NotificationsRepository extends BaseRepository implements NotificationsInt
 
         return $notification;
     }
+
+    public function listForUser(int $id)
+    {
+        return $this->model->where('user_id' , $id)->orderByDesc('id')->paginate(15);
+    }
+
+    public function findById(int $id)
+    {
+        return $this->model->where('user_id' , auth()->id())
+            ->where('id' , $id)
+            ->firstOrFail();
+    }
 }
