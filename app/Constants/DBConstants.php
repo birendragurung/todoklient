@@ -15,4 +15,6 @@ class DBConstants
     const VERIFICATION_TOKEN = 'verification_tokens';
 
     const USER_INVITATIONS = 'user_invitations';
+
+    const NOTIFICATIONS = 'notifications';
 }

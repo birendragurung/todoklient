@@ -7,6 +7,8 @@ namespace App\Interfaces;
 interface RepositoryInterface
 {
 
+    public function list();
+
     public function create(array $attributes);
 
     public function deleteById(int $id);

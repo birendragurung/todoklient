@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Constants\AppConstants;
-use App\Constants\DBConstants;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTaskRequest extends FormRequest
+class DeleteStaffRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +13,7 @@ class CreateTaskRequest extends FormRequest
      */
     public function authorize()
     {
-        return TRUE;
+        return false;
     }
 
     /**
@@ -26,10 +24,7 @@ class CreateTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|min:5|max:191' ,
-            'description' => 'nullable|string' ,
-            'assignee' => 'nullable|integer|exists:' . DBConstants::USERS . ',id' ,
-            'state' => 'required|string|in:' . join(',',AppConstants::TASK_STATES)
+            //
         ];
     }
 }

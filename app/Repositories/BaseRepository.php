@@ -11,14 +11,18 @@ abstract class BaseRepository implements RepositoryInterface
 {
     protected $model;
 
+    const DEFAULT_SORT_FIELD = 'id';
+
+    const DEFAULT_SORT_ORDER = 'DESC';
+
     public function __construct(Model $model)
     {
         $this->model = $model;
     }
 
-    public function list(array $params = [])
+    public function list(array $params = [], array $attributes = [] , array $options = [])
     {
-        return $this->model->get();
+        return $this->model->orderByDesc(self::DEFAULT_SORT_FIELD)->get();
     }
 
     public function create(array $attributes)

@@ -97,4 +97,16 @@ class AppConstants
     const ROLES = [
         self::ROLE_STAFF, self::ROLE_ADMIN
     ];
+
+    const NOTIFICATION_TYPE_TASK_ASSIGNEE_CHANGED = 'task_assignee_changed';
+
+    const NOTIFICATION_TYPE_TASK_STATUS_COMPLETED = 'task_status_completed';
+
+    const NOTIFICATION_TYPE_TASK_STATUS_CHANGED = 'task_status_changed';
+
+    const NOTIFICATION_TYPES = [
+        self::NOTIFICATION_TYPE_TASK_STATUS_CHANGED ,
+        self::NOTIFICATION_TYPE_TASK_STATUS_COMPLETED ,
+        self::NOTIFICATION_TYPE_TASK_ASSIGNEE_CHANGED,
+    ];
 }

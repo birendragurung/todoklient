@@ -59,6 +59,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        dd($exception);
         if (is_api_request($request)){
             if ($exception instanceof AuthenticationException) {
                 return $this->responseUnAuthorize($exception->getMessage());

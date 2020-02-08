@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Task;
+namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateTaskRequest;
+use App\Http\Requests\Admin\UpdateTaskRequest;
+use App\Http\Requests\Task\UpdateTaskAssigneeRequest;
+use App\Http\Requests\Task\UpdateTaskStatusRequest;
 use App\Interfaces\TasksInterface;
 use Illuminate\Http\Request;
 
@@ -25,8 +28,32 @@ class TasksController extends Controller
         $this->tasks = $tasks;
     }
 
-    public function create(CreateTaskRequest $request)
+    public function index(Request $request)
+    {
+        return $this->responseOk($this->tasks->list() );
+    }
+
+    public function store(CreateTaskRequest $request)
     {
         return $this->responseOk($this->tasks->create($request->all()));
+    }
+
+    public function show(Request $request, int $id)
+    {
+        return $this->responseOk($this->tasks->findById($id));
+    }
+
+    public function update(UpdateTaskRequest $request, int $id)
+    {
+        return $this->responseOk($this->tasks->updateById($id, $request->all()));
+    }
+
+    public function updateStatus(UpdateTaskStatusRequest $request, int $id)
+    {
+        return $this->responseOk($this->tasks->updateById($id, $request->all()));
+    }
+    public function updateAssignee(UpdateTaskAssigneeRequest $request, int $id)
+    {
+        return $this->responseOk($this->tasks->updateById($id, $request->all()));
     }
 }

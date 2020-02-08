@@ -16,12 +16,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('authenticate' , ['uses' => 'Auth\ApiLoginController@authenticate']);
 
-Route::get('/users', ['uses' => 'UserController@index', 'middleware' => 'auth:api' ]);
+Route::get('/users', ['uses' => 'UserController@index', 'middleware' => 'auth:api']);
 
-Route::group(['namespace' => 'Task', 'prefix' => 'admin', 'middleware' => 'auth:api'  ] , function(){
+Route::group(['namespace' => 'Task', 'prefix' => '', 'middleware' => 'auth:api'] , function(){
     Route::get('tasks' ,['uses' => 'TasksController@index']);
+    Route::get('tasks/{id}' ,['uses' => 'TasksController@show']);
     Route::post('tasks' , ['uses' => 'TasksController@store']);
     Route::put('tasks/{id}' , ['uses' => 'TasksController@update']);
+    Route::patch('tasks/{id}/status' , ['uses' => 'TasksController@updateStatus']);
+    Route::patch('tasks/{id}/assignee' , ['uses' => 'TasksController@updateAssignee']);
     Route::delete('tasks/{id}', ['uses' => 'TasksController@delete']);
 });
 
@@ -44,5 +47,5 @@ Route::group(['namespace'  => 'Admin' ,'prefix'     => 'admin/manage-admins' ,'m
 
 Route::group(['namespace' => 'Notification' , 'prefix' => 'notifications' , 'middleware' => 'auth:api' ], function(){
     Route::get('/' , ['uses' => 'NotificationsController@index' ]);
-    Route::patch('/{id}/seen' , ['uses' => 'NotificationsController@updateSeen' ]);
+    Route::patch('/{id}/seen' , ['uses' => 'NotificationsController@seen' ]);
 });

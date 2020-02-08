@@ -27,7 +27,7 @@ class UserInvitationRepository extends BaseRepository implements UserInvitationI
 
         event(new UserInvitedEvent($invitation));
 
-        return $invitation->email ;
+        return $attributes;
     }
 
     public function createUniqueToken()

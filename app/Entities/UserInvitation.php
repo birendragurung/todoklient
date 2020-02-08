@@ -5,7 +5,7 @@ namespace App\Entities;
 use App\Constants\DBConstants;
 use Illuminate\Database\Eloquent\Model;
 
-class UserInvitation extends Model
+class UserInvitation extends BaseModel
 {
     protected $table = DBConstants::USER_INVITATIONS;
 
