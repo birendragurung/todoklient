@@ -39,6 +39,18 @@ class Task extends BaseModel
 
     public function creator(): BelongsTo
     {
-        return $this->belongsTo(User::class , 'created_by' , 'id');
+        $foreignKey = 'created_by';
+        $ownerKey = 'id';
+        $relation = 'creator';
+
+        $instance = tap(new User(), function (Model $instance) {
+            if (! $instance->getConnectionName()) {
+                $instance->setConnection($instance->connection );
+            }
+        });
+
+        return $this->newBelongsTo(
+            $instance->newQuery(), $this, $foreignKey, $ownerKey, $relation
+        );
     }
 }
