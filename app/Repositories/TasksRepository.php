@@ -13,6 +13,7 @@ use App\Events\TaskAssigneeChanged;
 use App\Events\TaskCompleted;
 use App\Interfaces\TasksInterface;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class TasksRepository extends BaseRepository implements TasksInterface
 {
@@ -33,7 +34,7 @@ class TasksRepository extends BaseRepository implements TasksInterface
             $user = auth()->user();
             /* @var \App\Entities\Notification $notification */
             $notificationData = [
-                'id'          => DB::raw('uuid()') ,
+                'id'          => Str::uuid() ,
                 'title'       => 'A task has been assigned to you' ,
                 'type'        => AppConstants::NOTIFICATION_TYPE_TASK_ASSIGNED_TO_USER ,
                 'data'        => NULL ,
@@ -58,7 +59,7 @@ class TasksRepository extends BaseRepository implements TasksInterface
         if (isset($attributes['assignee']) && $attributes['assignee'] != NULL && $oldAssignee != $attributes['assignee']){
             /* @var \App\Entities\Notification $notification */
             $notification = $task->assignedUser->notifications()->create([
-                'id'          => DB::raw('uuid()') ,
+                'id'          => Str::uuid() ,
                 'title'       => 'Task' . $task->title . ' has been assigned to you' ,
                 'type'        => AppConstants::NOTIFICATION_TYPE_TASK_ASSIGNED_TO_USER ,
                 'data'        => NULL ,
@@ -74,7 +75,7 @@ class TasksRepository extends BaseRepository implements TasksInterface
         {
             /* @var \App\Entities\Notification $notification */
             $notification = $task->creator->notifications()->create([
-                'id'          => DB::raw('uuid()') ,
+                'id'          => Str::uuid() ,
                 'title'       => 'Task has been completed' ,
                 'type'        => AppConstants::NOTIFICATION_TYPE_TASK_STATUS_COMPLETED ,
                 'data'        => NULL ,
