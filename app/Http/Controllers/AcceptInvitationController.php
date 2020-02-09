@@ -52,6 +52,6 @@ class AcceptInvitationController extends Controller
         ]);
 
         $this->userInvitations->deleteByEmail($invitation->email);
-        return redirect()->route('web-app');
+        return redirect()->route('home');
     }
 }

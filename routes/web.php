@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('web-app');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/invitations/confirm' , 'AcceptInvitationController@showAcceptForm')->name('invitations.show') ;
 Route::post('/invitations/confirm' , 'AcceptInvitationController@accept')->name('invitations.confirm') ;
 
-Route::get('/' , 'ReactAppController@index');
+Route::get('/' , 'Auth\LoginController@showLoginForm')->middleware('guest') ;

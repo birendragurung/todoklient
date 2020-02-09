@@ -57,7 +57,7 @@ class TaskCompletedNotification extends BaseNotification
     {
         return (new MailMessage)
                     ->line('Task completed.')
-                    ->action('Open in app', route('web-app'))
+                    ->action('Open in app', route('home'))
                     ->line('Hi! task has been completed');
     }
 
