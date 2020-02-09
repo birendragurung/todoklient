@@ -62,4 +62,9 @@ class TasksController extends Controller
     {
         return $this->responseOk($this->tasks->deleteById($id));
     }
+
+    public function todoList(Request $request)
+    {
+        return $this->responseOk($this->tasks->getTodoList());
+    }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,25 +19,27 @@ Route::get('/users', ['uses' => 'UserController@index', 'middleware' => 'auth:ap
 
 Route::group(['namespace' => 'Task', 'prefix' => '', 'middleware' => 'auth:api'] , function(){
     Route::get('tasks' ,['uses' => 'TasksController@index']);
+    Route::get('tasks/todo', ['uses' => 'TasksController@todoList' ] );
     Route::get('tasks/{id}' ,['uses' => 'TasksController@show']);
-    Route::post('tasks' , ['uses' => 'TasksController@store']);
+    Route::post('tasks' , ['uses' => 'TasksController@store', 'middleware' => 'role.admin']);
     Route::put('tasks/{id}' , ['uses' => 'TasksController@update']);
     Route::patch('tasks/{id}/status' , ['uses' => 'TasksController@updateStatus']);
-    Route::patch('tasks/{id}/assignee' , ['uses' => 'TasksController@updateAssignee']);
-    Route::delete('tasks/{id}', ['uses' => 'TasksController@delete']);
+    Route::patch('tasks/{id}/assignee' , ['uses' => 'TasksController@updateAssignee', 'middleware' => 'role.admin' ]);
+    Route::delete('tasks/{id}', ['uses' => 'TasksController@delete', 'middleware' => 'role.admin' ]);
 });
 
 Route::post('/manage/invite', ['uses' => 'Invitation\InvitationController@invite' , 'middleware' => 'auth:api' ]);
 Route::get('/staff/invitations/confirm/{token}' , ['uses' => 'Staff\StaffsController@setPassword'])->name('staffs.invitations.confirm') ;
 
-Route::group(['namespace'  => 'Staff' ,'prefix'     => 'admin/manage-staffs' ,'middleware' => 'auth:api'] , function(){
+Route::group(['namespace'  => 'Staff' ,'prefix'     => 'admin/manage-staffs' ,'middleware' => ['auth:api']] , function(){
     Route::get('/' ,['uses' => 'StaffsController@index' ]);
-    Route::post('/new' ,['uses' => 'StaffsController@store' ]);
+    Route::get('/{id}' ,['uses' => 'StaffsController@show' ]);
+    Route::post('/new' ,['uses' => 'StaffsController@store' , 'middleware' => 'role.admin']);
     Route::put('/{id}' ,['uses' => 'StaffsController@update' ]);
-    Route::delete('/{id}' ,['uses' => 'StaffsController@delete' ]);
+    Route::delete('/{id}' ,['uses' => 'StaffsController@delete' , 'middleware' => 'role.admin']);
 });
 
-Route::group(['namespace'  => 'Admin' ,'prefix'     => 'admin/manage-admins' ,'middleware' => 'auth:api'] , function(){
+Route::group(['namespace'  => 'Admin' ,'prefix'     => 'admin/manage-admins' ,'middleware' => ['auth:api', 'role.admin']] , function(){
     Route::get('/' ,['uses' => 'AdminsController@index' ]);
     Route::post('/new' ,['uses' => 'AdminsController@store' ]);
     Route::put('/{id}' ,['uses' => 'AdminsController@update' ]);

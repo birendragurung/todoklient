@@ -93,4 +93,10 @@ class TasksRepository extends BaseRepository implements TasksInterface
 
         return $task;
     }
+
+    public function getTodoList()
+    {
+        return $this->model->where('assignee' , auth()->id())
+            ->where('state' , AppConstants::TASK_STATE_NEW)->paginate(20);
+    }
 }
