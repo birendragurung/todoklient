@@ -12,7 +12,18 @@ class Notification extends DatabaseNotification
 
     protected $table = DBConstants::NOTIFICATIONS;
 
-    protected $fillable = ['title' , 'description' , 'type' , 'user_id' , 'seen' , 'extra'];
+    protected $fillable = ['id', 'title' , 'description' , 'type' , 'user_id' , 'seen' , 'extra', 'entity_type', 'entity_id' ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'data' => 'array',
+        'read_at' => 'datetime',
+        'extra' => 'array'
+    ];
 
     /*
      * Model relations

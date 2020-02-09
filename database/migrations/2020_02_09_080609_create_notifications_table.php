@@ -17,11 +17,11 @@ class CreateNotificationsTable extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title' , 191);
-            $table->string('description' , 191);
+            $table->string('description' , 191)->nullable() ;
             $table->unsignedBigInteger('user_id');
-            $table->enum('type' , AppConstants::NOTIFICATION_TYPES);
-            $table->json('data');
-            $table->json('extra');
+            $table->string('type' , 191);
+            $table->json('data')->nullable() ;
+            $table->json('extra')->nullable() ;
             $table->string('entity_type' , 191);
             $table->unsignedBigInteger('entity_id');
             $table->timestamp('read_at')->nullable();

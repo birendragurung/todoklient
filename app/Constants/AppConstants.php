@@ -102,11 +102,14 @@ class AppConstants
 
     const NOTIFICATION_TYPE_TASK_STATUS_COMPLETED = 'task_status_completed';
 
+    const NOTIFICATION_TYPE_TASK_ASSIGNED_TO_USER = 'task_assigned_to_user';
+
     const NOTIFICATION_TYPE_TASK_STATUS_CHANGED = 'task_status_changed';
 
     const NOTIFICATION_TYPES = [
         self::NOTIFICATION_TYPE_TASK_STATUS_CHANGED ,
         self::NOTIFICATION_TYPE_TASK_STATUS_COMPLETED ,
         self::NOTIFICATION_TYPE_TASK_ASSIGNEE_CHANGED,
+        self::NOTIFICATION_TYPE_TASK_ASSIGNED_TO_USER
     ];
 }

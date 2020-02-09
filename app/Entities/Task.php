@@ -5,6 +5,8 @@ namespace App\Entities;
 use App\Constants\DBConstants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Task extends BaseModel
 {
@@ -20,7 +22,19 @@ class Task extends BaseModel
      * */
     public function assignedUser(): BelongsTo
     {
-        return $this->belongsTo(User::class , 'assignee' , 'id');
+        $foreignKey = 'assignee';
+        $ownerKey = 'id';
+        $relation = 'assignedUser';
+
+        $instance = tap(new User(), function (Model $instance) {
+            if (! $instance->getConnectionName()) {
+                $instance->setConnection($instance->connection );
+            }
+        });
+
+        return $this->newBelongsTo(
+            $instance->newQuery(), $this, $foreignKey, $ownerKey, $relation
+        );
     }
 
     public function creator(): BelongsTo

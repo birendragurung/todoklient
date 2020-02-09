@@ -2,7 +2,9 @@
 
 namespace App\Events;
 
+use App\Entities\Notification;
 use App\Entities\Task;
+use App\Entities\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -21,14 +23,28 @@ class TaskAssignedToUser
     private $task;
 
     /**
+     * @var \App\Entities\User
+     */
+    private $user;
+
+    /**
+     * @var \App\Entities\Notification
+     */
+    private $notification;
+
+    /**
      * Create a new event instance.
      *
      * @param \App\Entities\Task $task
+     * @param \App\Entities\User $user
+     * @param \App\EntitSymfony\Component\Console\Exception\CommandNotFoundException
+ies\Notification $notification
      */
-    public function __construct(Task $task)
+    public function __construct(Task $task, User $user, Notification $notification)
     {
-        //
         $this->task = $task;
+        $this->user = $user;
+        $this->notification = $notification;
     }
 
     /**
@@ -47,5 +63,10 @@ class TaskAssignedToUser
     public function getTask(): Task
     {
         return $this->task;
+    }
+
+    public function getNotification(): Notification
+    {
+        return $this->notification;
     }
 }

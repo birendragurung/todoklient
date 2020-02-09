@@ -31,8 +31,8 @@ class TaskAssignedToUserListener
     public function handle(TaskAssignedToUser $event)
     {
         /* @var User $user */
-        $user = $event->getTask()->assignedUser();
+        $user = $event->getTask()->assignedUser()->first();
 
-        $user->notify(new TaskAssignedToUserNotification($event->getTask()));
+        $user->notify(new TaskAssignedToUserNotification($event->getTask(), $event->getNotification() ));
     }
 }

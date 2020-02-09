@@ -13,6 +13,7 @@
         "arcanedev/log-viewer": "^5.2",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
+        "laravel/horizon": "^3.6",
         "laravel/passport": "^8.3",
         "laravel/tinker": "^2.0"
     },

@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Constants\DBConstants;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,6 +13,8 @@ class User extends Authenticatable
 {
     use Notifiable, HasApiTokens;
 
+
+    protected $table = DBConstants::USERS;
     /**
      * The attributes that are mass assignable.
      *
@@ -44,7 +47,7 @@ class User extends Authenticatable
      * */
     public function notifications(): HasMany
     {
-        return $this->hasMany(Notifiable::class , 'user_id' , 'id')->orderBy('id', 'desc');
+        return $this->hasMany(Notification::class , 'user_id' , 'id')->orderBy('id', 'desc');
     }
 
     /**
