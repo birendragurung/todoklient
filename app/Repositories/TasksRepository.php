@@ -133,7 +133,7 @@ class TasksRepository extends BaseRepository implements TasksInterface
         }
 
         foreach ($taskHistories as $taskHistory){
-            TaskHistory::created($this);
+            TaskHistory::create($taskHistories);
         }
 
         return $task;
