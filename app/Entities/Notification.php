@@ -5,8 +5,9 @@ namespace App\Entities;
 use App\Constants\DBConstants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Notifications\DatabaseNotification;
 
-class Notification extends Model
+class Notification extends DatabaseNotification
 {
 
     protected $table = DBConstants::NOTIFICATIONS;

@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Events\Staff\NewStaffCreated;
+use App\Events\TaskAssignedToUser;
 use App\Events\TaskAssigneeChanged;
 use App\Events\UserInvitedEvent;
 use App\Listeners\NotifyTaskAssignedUser;
 use App\Listeners\Staff\SendEmailInvitationToStaff;
+use App\Listeners\TaskAssignedToUserListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -29,6 +31,9 @@ class EventServiceProvider extends ServiceProvider
         NewStaffCreated::class => [] ,
         TaskAssigneeChanged::class => [
             NotifyTaskAssignedUser::class
+        ],
+        TaskAssignedToUser::class => [
+            TaskAssignedToUserListener::class
         ]
     ];
 

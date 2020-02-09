@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Entities\Task;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -12,13 +13,19 @@ class TaskAssignedToUserNotification extends Notification
     use Queueable;
 
     /**
+     * @var \App\Entities\Task
+     */
+    private $task;
+
+    /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param \App\Entities\Task $task
      */
-    public function __construct()
+    public function __construct(Task $task)
     {
         //
+        $this->task = $task;
     }
 
     /**

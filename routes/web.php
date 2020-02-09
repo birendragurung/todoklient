@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('web-app');
 
 Route::get('/invitations/confirm' , 'AcceptInvitationController@showAcceptForm')->name('invitations.show') ;
 Route::post('/invitations/confirm' , 'AcceptInvitationController@accept')->name('invitations.confirm') ;
+
+Route::get('/' , 'ReactAppController@index');

@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Entities\Task;
+use App\Events\TaskAssignedToUser;
 use App\Events\TaskAssigneeChanged;
 use App\Interfaces\TasksInterface;
 
@@ -19,7 +20,12 @@ class TasksRepository extends BaseRepository implements TasksInterface
     {
         $attributes['created_by'] = auth()->id();
         $attributes['updated_by'] = auth()->id();
-        return parent::create($attributes);
+        $task = parent::create($attributes);
+
+        if ($task->assignee){
+            event(new TaskAssignedToUser($task));
+        }
+        return $task;
     }
 
     public function updateById(int $id , array $attributes)

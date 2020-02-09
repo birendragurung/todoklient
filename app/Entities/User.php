@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -37,4 +38,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /*
+     * Model relations
+     * */
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notifiable::class , 'user_id' , 'id')->orderBy('id', 'desc');
+    }
+
+    /**
+     * Get the entity's read notifications.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function readNotifications()
+    {
+        return $this->notifications()->where('seen' ,'=', 1);
+    }
+
+    /**
+     * Get the entity's unread notifications.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function unreadNotifications()
+    {
+        return $this->notifications()->where('seen' ,'=', 0);
+    }
 }
