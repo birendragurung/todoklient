@@ -27,7 +27,9 @@ Route::group(['namespace' => 'Task', 'prefix' => '', 'middleware' => 'auth:api']
     Route::patch('tasks/{id}/assignee' , ['uses' => 'TasksController@updateAssignee', 'middleware' => 'role.admin' ]);
     Route::delete('tasks/{id}', ['uses' => 'TasksController@delete', 'middleware' => 'role.admin' ]);
 });
-
+Route::group(['namespace' => 'TaskHistory', 'middleware' => 'auth:api'  ] , function(){
+    Route::get('/tasks/{id}/history' , ['uses' => 'TaskHistoryController@index']);
+});
 Route::post('/manage/invite', ['uses' => 'Invitation\InvitationController@invite' , 'middleware' => 'auth:api' ]);
 Route::get('/staff/invitations/confirm/{token}' , ['uses' => 'Staff\StaffsController@setPassword'])->name('staffs.invitations.confirm') ;
 

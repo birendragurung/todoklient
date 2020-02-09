@@ -17,4 +17,6 @@ class DBConstants
     const USER_INVITATIONS = 'user_invitations';
 
     const NOTIFICATIONS = 'notifications';
+
+    const TABLE_TASK_HISTORIES = 'task_histories';
 }

@@ -9,6 +9,7 @@ class AppConstants
 
     /**
      * The general constant value for most of the success response
+     *
      * @type string
      */
     const SUCCESS_OK = 'ok';
@@ -16,6 +17,7 @@ class AppConstants
     const ERR_CODE_ZERO = 0;
 
     const START_TIME = '00:00:00';
+
     const END_TIME = '23:59:59';
 
     /** Note that this constant group is made as per \Illuminate\Contracts\Auth\PasswordBroker constant. We've only replaced dot with an underscore */
@@ -34,12 +36,16 @@ class AppConstants
     const ROLE_ADMIN = 'admin';
 
     /**
-     * Used typically whenever user try to submitForm with invalid username/password combination
+     * Used typically whenever user try to submitForm with invalid
+     * username/password combination
+     *
      * @type string
      */
     const ERR_INVALID_CREDENTIAL = 'invalid_credentials';
+
     /**
      * Used typically whenever required value in the request is empty
+     *
      * @type string
      */
     const ERR_REQUIRED_FIELDS_EMPTY = 'required_fields_empty';
@@ -95,7 +101,8 @@ class AppConstants
     ];
 
     const ROLES = [
-        self::ROLE_STAFF, self::ROLE_ADMIN
+        self::ROLE_STAFF ,
+        self::ROLE_ADMIN,
     ];
 
     const NOTIFICATION_TYPE_TASK_ASSIGNEE_CHANGED = 'task_assignee_changed';
@@ -109,7 +116,15 @@ class AppConstants
     const NOTIFICATION_TYPES = [
         self::NOTIFICATION_TYPE_TASK_STATUS_CHANGED ,
         self::NOTIFICATION_TYPE_TASK_STATUS_COMPLETED ,
-        self::NOTIFICATION_TYPE_TASK_ASSIGNEE_CHANGED,
-        self::NOTIFICATION_TYPE_TASK_ASSIGNED_TO_USER
+        self::NOTIFICATION_TYPE_TASK_ASSIGNEE_CHANGED ,
+        self::NOTIFICATION_TYPE_TASK_ASSIGNED_TO_USER,
+    ];
+
+    const TASK_HISTORY_TYPE_NEWLY_CREATED = 'task_created';
+
+    const TASK_HISTORY_TYPE_ASSIGNED_TO_USER = 'task_assigned_to_user';
+
+    const TASK_HISTORY_TYPES = [
+        self::TASK_HISTORY_TYPE_NEWLY_CREATED,
     ];
 }

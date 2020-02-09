@@ -7,12 +7,12 @@ namespace App\Repositories;
 use App\Constants\AppConstants;
 use App\Constants\DBConstants;
 use App\Entities\Task;
+use App\Entities\TaskHistory;
 use App\Entities\User;
 use App\Events\TaskAssignedToUser;
 use App\Events\TaskAssigneeChanged;
 use App\Events\TaskCompleted;
 use App\Interfaces\TasksInterface;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class TasksRepository extends BaseRepository implements TasksInterface
@@ -28,7 +28,14 @@ class TasksRepository extends BaseRepository implements TasksInterface
         $attributes['created_by'] = auth()->id();
         $attributes['updated_by'] = auth()->id();
         $task                     = parent::create($attributes);
+        $taskHistories            = [];
 
+        $taskHistories[] = [
+            'title'   => auth()->user()->name . ' created a task' ,
+            'task_id' => $task->id ,
+            'user_id' => auth()->id() ,
+            'type'    => AppConstants::TASK_HISTORY_TYPE_NEWLY_CREATED ,
+        ];
         if ($task->assignee){
             /* @var User $user */
             $user = auth()->user();
@@ -43,8 +50,22 @@ class TasksRepository extends BaseRepository implements TasksInterface
                 'entity_id'   => $task->id ,
             ];
 
+            $taskHistories[] = [
+                'title'   => auth()->user()->name . ' assigned task to ' . $task->assignedUser->name,
+                'task_id' => $task->id ,
+                'user_id' => auth()->id() ,
+                'type'    => AppConstants::TASK_HISTORY_TYPE_ASSIGNED_TO_USER ,
+                'data' => [
+                    'assignee' => $task->assignee
+                ]
+            ];
+
             $notification = $user->notifications()->create($notificationData);
             event(new TaskAssignedToUser($task , $user , $notification));
+        }
+
+        foreach ($taskHistories as $taskHistory){
+            TaskHistory::create($taskHistory);
         }
         return $task;
     }
@@ -54,8 +75,11 @@ class TasksRepository extends BaseRepository implements TasksInterface
         $attributes['updated_by'] = auth()->id();
         /* @var Task $task */
         $task        = $this->findById($id);
+        $oldState = $task->state;
         $oldAssignee = $task->assignee;
-        $task->fill($attributes);
+        $task->fill($attributes)->save() ;
+        $taskHistories = [];
+
         if (isset($attributes['assignee']) && $attributes['assignee'] != NULL && $oldAssignee != $attributes['assignee']){
             /* @var \App\Entities\Notification $notification */
             $notification = $task->assignedUser->notifications()->create([
@@ -68,11 +92,21 @@ class TasksRepository extends BaseRepository implements TasksInterface
                 'entity_id'   => $task->id ,
             ]);
 
-            event(new TaskAssigneeChanged($task , $task->assignedUser , $notification));
+
+            $taskHistories[] = [
+                'title'   => auth()->user()->name . ' assigned task to ' . $task->assignedUser->name,
+                'task_id' => $task->id ,
+                'user_id' => auth()->id() ,
+                'type'    => AppConstants::TASK_HISTORY_TYPE_ASSIGNED_TO_USER ,
+                'data' => [
+                    'oldAssignee' => $oldAssignee,
+                    'newAssignee' => $attributes['assignee']
+                ]
+            ];
+            event(new TaskAssignedToUser($task , $task->assignedUser , $notification));
         }
 
-        if (isset($attributes['state']) && auth()->id() != $task->created_by && $attributes['state'] == AppConstants::TASK_STATE_COMPLETED)
-        {
+        if (isset($attributes['state']) && auth()->id() != $task->created_by && $attributes['state'] != $task->state && $attributes['state'] == AppConstants::TASK_STATE_COMPLETED){
             /* @var \App\Entities\Notification $notification */
             $notification = $task->creator->notifications()->create([
                 'id'          => Str::uuid() ,
@@ -84,12 +118,23 @@ class TasksRepository extends BaseRepository implements TasksInterface
                 'entity_id'   => $task->id ,
             ]);
 
+
+            $taskHistories[] = [
+                'title'   => auth()->user()->name . ' assigned task to ' . $task->assignedUser->name,
+                'task_id' => $task->id ,
+                'user_id' => auth()->id() ,
+                'type'    => AppConstants::TASK_HISTORY_TYPE_ASSIGNED_TO_USER ,
+                'data' => [
+                    'previous_state' => $oldState ,
+                    'new_state' => $attributes['state']
+                ]
+            ];
             event(new TaskCompleted($task , $task->creator , $notification));
-
         }
-        parent::updateById($id , $attributes);
 
-        $task = $this->findById($id);
+        foreach ($taskHistories as $taskHistory){
+            TaskHistory::created($this);
+        }
 
         return $task;
     }
@@ -97,6 +142,7 @@ class TasksRepository extends BaseRepository implements TasksInterface
     public function getTodoList()
     {
         return $this->model->where('assignee' , auth()->id())
-            ->where('state' , AppConstants::TASK_STATE_NEW)->paginate(20);
+            ->where('state' , AppConstants::TASK_STATE_NEW)
+            ->paginate(20);
     }
 }

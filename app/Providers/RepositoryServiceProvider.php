@@ -19,5 +19,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Interfaces\StaffsInterface', 'App\Repositories\StaffsRepository');
         $this->app->bind('App\Interfaces\NotificationsInterface', 'App\Repositories\NotificationsRepository');
         $this->app->bind('App\Interfaces\UserInvitationInterface', 'App\Repositories\UserInvitationRepository');
+        $this->app->bind('App\Interfaces\TaskHistoryInterface', 'App\Repositories\TaskHistoryRepository');
     }
 }
