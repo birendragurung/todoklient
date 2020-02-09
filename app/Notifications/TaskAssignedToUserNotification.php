@@ -55,10 +55,11 @@ class TaskAssignedToUserNotification extends BaseNotification
      */
     public function toMail($notifiable)
     {
+        $line = $notifiable->name;
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line($this->notification->title )
+                    ->action('View notification in app', route('web-app') )
+                    ->line('Hi, ' . $line . '! a task has been assigned to you');
     }
 
     /**

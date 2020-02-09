@@ -31,10 +31,6 @@ class TasksRepository extends BaseRepository implements TasksInterface
             /* @var User $user */
             $user = auth()->user();
             /* @var \App\Entities\Notification $notification */
-            //DB::listen(function($q){
-            //    dd($q);
-            //});
-
             $notificationData = [
                 'id'          => DB::raw('uuid()') ,
                 'title'       => 'A task has been assigned to you' ,
