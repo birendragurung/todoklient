@@ -18,9 +18,9 @@ class Controller extends BaseController
     {
         $notificationRepo = app(NotificationsInterface::class);
         $authUser                                = auth()->user();
-        $unreadNotficationCount                  = $notificationRepo->unreadCount($authUser->id);
+        $unreadNotificationCount                  = $notificationRepo->unreadCount($authUser->id);
         $notificationData['total']               = $notificationRepo->totalForUser($authUser->id);
-        $notificationData['unreadCount']         = $unreadNotficationCount;
+        $notificationData['unreadCount']         = $unreadNotificationCount;
         $notificationData['latestNotifications'] = $notificationRepo->list();
 
         $adminData = [
