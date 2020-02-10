@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Entities\Notification;
 use App\Interfaces\NotificationsInterface;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use function GuzzleHttp\Promise\task;
 
 class NotificationsRepository extends BaseRepository implements NotificationsInterface
 {
@@ -43,5 +44,15 @@ class NotificationsRepository extends BaseRepository implements NotificationsInt
         return $this->model->where('user_id' , auth()->id())
             ->where('id' , $id)
             ->firstOrFail();
+    }
+
+    public function unreadCount(int $id)
+    {
+        return $this->model->whereNull('read_at')->where('user_id' , $id)->count();
+    }
+
+    public function totalForUser($id)
+    {
+        return $this->model->where('user_id' , $id)->count();
     }
 }

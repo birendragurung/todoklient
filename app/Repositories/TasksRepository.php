@@ -13,6 +13,7 @@ use App\Events\TaskAssignedToUser;
 use App\Events\TaskAssigneeChanged;
 use App\Events\TaskCompleted;
 use App\Interfaces\TasksInterface;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class TasksRepository extends BaseRepository implements TasksInterface
@@ -144,5 +145,23 @@ class TasksRepository extends BaseRepository implements TasksInterface
         return $this->model->where('assignee' , auth()->id())
             ->where('state' , AppConstants::TASK_STATE_NEW)
             ->paginate(20);
+    }
+
+    public function taskCountStatistics()
+    {
+        $query = $this->model->newQuery();
+        $total = $this->model->count();
+        $stateCount = $query->selectRaw('count(*) as count, state')
+            ->groupBy('state')
+            ->get()
+            ->reduce(function($carry , $item){
+                return $carry += [$item->state=>$item->count];
+            }, []) ;
+
+        return [
+            'total' => $total,
+            'completed_count' => Arr::get($stateCount,AppConstants::TASK_STATE_COMPLETED, 0),
+            'new_count' => Arr::get($stateCount,AppConstants::TASK_STATE_NEW, 0),
+        ];
     }
 }

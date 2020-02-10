@@ -8,4 +8,6 @@ interface TasksInterface extends RepositoryInterface
 {
 
     public function getTodoList();
+
+	public function taskCountStatistics();
 }

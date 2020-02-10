@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Constants\AppConstants;
 use Closure;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class StaffRole
 {
@@ -15,6 +17,10 @@ class StaffRole
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if (auth()->user() && auth()->user()->role == AppConstants::ROLE_STAFF){
+            return $next($request);
+        }
+
+        throw new UnauthorizedHttpException('Unauthorized');
     }
 }

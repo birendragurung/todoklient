@@ -14,7 +14,7 @@ class CreateStaffRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth('api')->check() && auth('api')->user()->role == AppConstants::ROLE_ADMIN ;
+        return auth()->check() && auth()->user()->role == AppConstants::ROLE_ADMIN ;
     }
 
     /**
