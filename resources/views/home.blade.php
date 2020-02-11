@@ -34,7 +34,7 @@
                         <div class="icon">
                             <i class="ion ion-clipboard mr-1"></i>
                         </div>
-                        <a href="#" class="small-box-footer">View all <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('admin.manage.tasks.list') }}" class="small-box-footer">View all <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 @if($authUser->role == 'admin' )
@@ -49,7 +49,7 @@
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="#" class="small-box-footer">All users <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('manage.staffs.index') }}" class="small-box-footer">All users <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 @endif

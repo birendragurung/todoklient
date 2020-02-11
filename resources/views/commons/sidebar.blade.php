@@ -10,7 +10,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ $authUser->name }}</a>
@@ -38,10 +38,18 @@
                 </li>
                 @if($authUser->role == 'admin' )
                 <li class="nav-item">
-                    <a href="widgets.html" class="nav-link">
+                    <a href="{{ route('manage.staffs.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
-                            Users
+                            Staffs
+                        </p>
+                    </a>
+                </li>
+                    <li class="nav-item">
+                    <a href="{{ route('manage.admins.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Admins
                         </p>
                     </a>
                 </li>

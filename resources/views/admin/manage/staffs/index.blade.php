@@ -7,20 +7,19 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ route('manage.tasks.create') }}">
-                        <button class="btn btn-link" type="submit">Create task</button>
-                    </a>
+                        <a href="{{ route('manage.staffs.create') }}">
+                            <button class="btn btn-link" type="submit">Create staff</button>
+                        </a>
                 </div>
             </div>
-            <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Tasks</h3>
+                            <h3 class="card-title">Staffs</h3>
 
                             <div class="card-tools">
-                                {{ $tasks->links()   }}
+                                {{ $staffs->links()   }}
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -29,32 +28,25 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Task</th>
-                                    <th>Description</th>
-                                    <th>Assignee</th>
-                                    <th style="width: 40px">Status</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($tasks as $task)
+                                @foreach($staffs as $staff)
                                     <tr>
-                                        <td>{{ $task->id }}</td>
-                                        <td>{{ $task->title }}</td>
+                                        <td>{{ $staff->id }}</td>
+                                        <td>{{ $staff->name }}</td>
                                         <td>
-                                            {{ $task->description  }}
+                                            <span class="badge {{ $staff->state == 'competed' ? 'bg-success' :'bg-warning' }}">{{ $staff->state }}</span>
                                         </td>
-                                        <td>{{ $task->assignedUser? $task->assignedUser->name : 'Unassigned' }}</td>
                                         <td>
-                                            <span class="badge {{ $task->state == 'completed' ? 'bg-success' :'bg-warning' }}">{{ $task->state }}</span>
-                                        </td>
-                                        {{--<td>
-                                            <form method="post" action="{{ route('tasks.status', $task->id ) }}">
+                                            <form method="post" action="{{ route('manage.staffs.delete', $staff->id ) }}">
                                                 @csrf
-                                                @method('patch')
-                                                <input type="state" hidden name="state" value="completed">
-                                                <button class="btn btn-link" type="submit">Mark as complete</button>
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-link">Delete</button>
                                             </form>
-                                        </td>--}}
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

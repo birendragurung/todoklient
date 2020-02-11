@@ -12,4 +12,6 @@ interface UsersInterface extends RepositoryInterface
     public function findByEmail(string $email);
 
 	public function countStaff();
+
+    public function listAdmins();
 }

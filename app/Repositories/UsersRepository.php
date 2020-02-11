@@ -34,4 +34,10 @@ class UsersRepository extends BaseRepository implements UsersInterface
     {
         return $this->model->where('role' , AppConstants::ROLE_STAFF)->count();
     }
+
+    public function listAdmins()
+    {
+        return $this->model->where('role' , AppConstants::ROLE_ADMIN)
+            ->paginate(15);
+    }
 }

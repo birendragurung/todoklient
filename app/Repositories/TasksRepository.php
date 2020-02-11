@@ -10,7 +10,6 @@ use App\Entities\Task;
 use App\Entities\TaskHistory;
 use App\Entities\User;
 use App\Events\TaskAssignedToUser;
-use App\Events\TaskAssigneeChanged;
 use App\Events\TaskCompleted;
 use App\Interfaces\TasksInterface;
 use Illuminate\Support\Arr;
@@ -163,5 +162,41 @@ class TasksRepository extends BaseRepository implements TasksInterface
             'completed_count' => Arr::get($stateCount,AppConstants::TASK_STATE_COMPLETED, 0),
             'new_count' => Arr::get($stateCount,AppConstants::TASK_STATE_NEW, 0),
         ];
+    }
+
+    public function updateStateById(int $id , $state)
+    {
+        $task = $this->model->findOrFail($id);
+
+        $task->update(['state' => $state]);
+
+        return $task;
+    }
+
+    public function taskCountStatisticsForStaff($id)
+    {
+        $query = $this->model->newQuery();
+        $total = $this->model->where('assignee' , $id) ->count();
+        $stateCount = $query->selectRaw('count(*) as count, state')
+            ->groupBy('state')
+            ->get()
+            ->reduce(function($carry , $item){
+                return $carry += [$item->state=>$item->count];
+            }, []) ;
+
+        return [
+            'total' => $total,
+            'completed_count' => Arr::get($stateCount,AppConstants::TASK_STATE_COMPLETED, 0),
+            'new_count' => Arr::get($stateCount,AppConstants::TASK_STATE_NEW, 0),
+        ];    }
+
+    public function listTasks()
+    {
+        return $this->model->paginate(15);
+    }
+
+    public function tasksForUser(int $id)
+    {
+        return $this->model->where('assignee' , $id)->paginate();
     }
 }

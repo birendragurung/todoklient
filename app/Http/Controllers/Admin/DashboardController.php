@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\AppConstants;
 use App\Http\Controllers\Controller;
 use App\Interfaces\NotificationsInterface;
 use App\Interfaces\TasksInterface;
@@ -42,11 +43,17 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $taskData                                = $this->tasks->taskCountStatistics();
-        $totalStaffs = $this->users->countStaff();
+        $authUser = auth()->user();
+        if ($authUser->role === AppConstants::ROLE_ADMIN){
+            $taskData    = $this->tasks->taskCountStatistics();
+            $totalStaffs = $this->users->countStaff();
+        }
+        else{
+            $taskData = $this->tasks->taskCountStatisticsForStaff($authUser->id);
+        }
         return view('home' , $this->withUserData([
-            'taskData'         => $taskData ,
-            'totalStaffs' => $totalStaffs
+            'taskData'    => $taskData ,
+            'totalStaffs' => $totalStaffs ?? 0,
         ]));
     }
 }
